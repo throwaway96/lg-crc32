@@ -64,13 +64,16 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
+    fprintf(stderr, "read %zu (%#zx) bytes\n", len, len);
+
     fclose(fp);
 
     uint32_t crc = calc_lg_crc32(buf, len);
 
     free(buf);
 
-    printf("CRC32 (%zu bytes) = %#08x\n", len, crc);
+    printf("CRC32 = %#08x [%02x %02x %02x %02x]\n", crc, crc & 0xff,
+           (crc >> 8) & 0xff, (crc >> 16) & 0xff, (crc >> 24) & 0xff);
 
     return EXIT_SUCCESS;
 }
